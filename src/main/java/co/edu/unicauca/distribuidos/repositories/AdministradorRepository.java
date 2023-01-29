@@ -25,6 +25,7 @@ public class AdministradorRepository {
 
     public Administrador save(Administrador Admin){
         Administrador objAdmin=null;
+
         if(this.listaAdministradores.add(Admin)){
             objAdmin=Admin;
         }

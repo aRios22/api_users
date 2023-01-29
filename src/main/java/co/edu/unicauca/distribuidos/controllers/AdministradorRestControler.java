@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unicauca.distribuidos.models.Administrador;
-import co.edu.unicauca.distribuidos.services.IAdministradorServicio;
+import co.edu.unicauca.distribuidos.services.Administrador.IAdministradorServicio;
+import co.edu.unicauca.distribuidos.services.DTO.AdministradorDTO;
+import co.edu.unicauca.distribuidos.services.DTO.CredencialesDTO;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class AdministradorRestControler {
 
     @Autowired
@@ -24,8 +27,15 @@ public class AdministradorRestControler {
         return AdministradorService.findAll();
     }
 
-    @GetMapping("/validate/{usuario}/{contraseña}/")
-    public boolean validate(@PathVariable String usuario, @PathVariable String contraseña) {
-        return AdministradorService.validarCredenciales(usuario, contraseña);
+    @GetMapping("/login")
+    public boolean login(@RequestBody CredencialesDTO credenciales) {
+        return AdministradorService.validarCredenciales(credenciales);
+    }
+
+    @PostMapping("/create")
+	public AdministradorDTO create(@RequestBody AdministradorDTO admin) {	
+		AdministradorDTO objAdmin = null;
+		objAdmin =  AdministradorService.save(admin);
+		return objAdmin;
     }
 }
