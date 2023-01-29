@@ -25,6 +25,12 @@ public class AdministradorRepository {
 
     public Administrador save(Administrador Admin){
         Administrador objAdmin=null;
+        
+        for (Administrador savedAdmin : this.listaAdministradores) {
+            if(savedAdmin.getLogin().compareTo(Admin.getLogin())==0){
+                return objAdmin;
+            }
+        }
 
         if(this.listaAdministradores.add(Admin)){
             objAdmin=Admin;
@@ -42,7 +48,7 @@ public class AdministradorRepository {
     }
 
     private void cargarAdmins(){
-        Administrador objAdmin=new Administrador(1,"Andres", "Rios", "admin","admin");
+        Administrador objAdmin=new Administrador(1,"Andres", "Medina", "adminbase","adminbase");
         this.listaAdministradores.add(objAdmin);
     }
 

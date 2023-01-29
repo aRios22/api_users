@@ -29,6 +29,9 @@ public class UsuarioServicioImpl implements IUsuarioServicio {
     public UsuarioDTO save(UsuarioDTO User) {
         Usuario userEntity=this.modelMapper.map(User, Usuario.class);
 		Usuario objUserEntity= this.servicioAccesoBaseDatos.save(userEntity);
+        if (objUserEntity == null) {
+            return null;
+        }
 		UsuarioDTO usuarioDTO=this.modelMapper.map(objUserEntity, UsuarioDTO.class);
 		return usuarioDTO;	
     }

@@ -29,6 +29,9 @@ public class AdministradorServicioImpl implements IAdministradorServicio{
     public AdministradorDTO save(AdministradorDTO Admin) {
         Administrador adminEntity=this.modelMapper.map(Admin, Administrador.class);
 		Administrador objAdminEntity= this.servicioAccesoBaseDatos.save(adminEntity);
+        if (objAdminEntity == null) {
+            return null;
+        }
 		AdministradorDTO adminDTO=this.modelMapper.map(objAdminEntity, AdministradorDTO.class);
 		return adminDTO;	
     }

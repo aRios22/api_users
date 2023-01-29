@@ -2,7 +2,12 @@ package co.edu.unicauca.distribuidos.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,19 +28,32 @@ public class AdministradorRestControler {
 
 
     @GetMapping("/admins")
-    public List<Administrador> index() {
-        return AdministradorService.findAll();
+    public ResponseEntity<List<Administrador>> index() {
+        return new ResponseEntity<List<Administrador>>(AdministradorService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/login")
-    public boolean login(@RequestBody CredencialesDTO credenciales) {
-        return AdministradorService.validarCredenciales(credenciales);
+    public ResponseEntity login(@RequestBody CredencialesDTO credenciales) {
+        Boolean result = AdministradorService.validarCredenciales(credenciales);
+        if(result == true){
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
     }
 
     @PostMapping("/create")
-	public AdministradorDTO create(@RequestBody AdministradorDTO admin) {	
+	public ResponseEntity create(@Valid @RequestBody  AdministradorDTO admin, BindingResult result) {	
 		AdministradorDTO objAdmin = null;
 		objAdmin =  AdministradorService.save(admin);
-		return objAdmin;
+        if(result.hasErrors()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(result.getFieldErrors()); 
+        }
+		if (objAdmin != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(objAdmin);
+        } else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("El nombre de usuario ya existe.");
+        }
     }
 }

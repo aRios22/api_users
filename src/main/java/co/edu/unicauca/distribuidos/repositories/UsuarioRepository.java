@@ -25,6 +25,12 @@ public class UsuarioRepository {
     public Usuario save(Usuario User){
         Usuario objUsuario=null;
 
+        for (Usuario savedUser : this.listaUsuarios) {
+            if(savedUser.getLogin().compareTo(User.getLogin())==0){
+                return objUsuario;
+            }
+        }
+
         if(this.listaUsuarios.add(User)){
             objUsuario=User;
         }
@@ -41,7 +47,7 @@ public class UsuarioRepository {
     }
 
     private void cargarUsuarios(){
-        Usuario objUsuario=new Usuario(1,"Andres", "Rios","correo@mail.com",123456789 ,"user","user");
+        Usuario objUsuario=new Usuario(1,"Andres", "Medina","correo@mail.com","5523456789" ,"usuariobase","usuariobase");
         this.listaUsuarios.add(objUsuario);
     }
 }
