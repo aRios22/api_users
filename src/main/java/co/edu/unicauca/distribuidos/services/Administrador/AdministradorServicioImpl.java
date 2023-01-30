@@ -37,8 +37,13 @@ public class AdministradorServicioImpl implements IAdministradorServicio{
     }
 
     @Override
-    public Boolean validarCredenciales(CredencialesDTO credenciales) {
-        return this.servicioAccesoBaseDatos.validarCredenciales(credenciales.getLogin(), credenciales.getContraseña());
+    public AdministradorDTO validarCredenciales(CredencialesDTO credenciales) {
+        Administrador result=this.servicioAccesoBaseDatos.validarCredenciales(credenciales.getLogin(), credenciales.getContraseña());
+        if(result==null){
+            return null;
+        }
+        AdministradorDTO adminDTO=this.modelMapper.map(result, AdministradorDTO.class);
+        return adminDTO;
     }
     
 }

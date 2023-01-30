@@ -34,22 +34,23 @@ public class AdministradorRestControler {
 
     @GetMapping("/login")
     public ResponseEntity login(@RequestBody CredencialesDTO credenciales) {
-        Boolean result = AdministradorService.validarCredenciales(credenciales);
-        if(result == true){
+        AdministradorDTO result = AdministradorService.validarCredenciales(credenciales);
+        if(result != null){
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
         else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credenciales inválidas.");
         }
     }
 
     @PostMapping("/create")
 	public ResponseEntity create(@Valid @RequestBody  AdministradorDTO admin, BindingResult result) {	
 		AdministradorDTO objAdmin = null;
-		objAdmin =  AdministradorService.save(admin);
         if(result.hasErrors()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(result.getFieldErrors()); 
         }
+		objAdmin =  AdministradorService.save(admin);
+
 		if (objAdmin != null) {
             return ResponseEntity.status(HttpStatus.OK).body(objAdmin);
         } else{

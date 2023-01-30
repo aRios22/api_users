@@ -37,8 +37,13 @@ public class UsuarioServicioImpl implements IUsuarioServicio {
     }
 
     @Override
-    public Boolean validarCredenciales(CredencialesDTO credenciales) {
-        return this.servicioAccesoBaseDatos.validarCredenciales(credenciales.getLogin(), credenciales.getContraseña());
+    public UsuarioDTO validarCredenciales(CredencialesDTO credenciales) {
+        Usuario result=this.servicioAccesoBaseDatos.validarCredenciales(credenciales.getLogin(), credenciales.getContraseña());
+        if(result==null){
+            return null;
+        }
+        UsuarioDTO userDTO=this.modelMapper.map(result, UsuarioDTO.class);
+        return userDTO;
     }
     
 }

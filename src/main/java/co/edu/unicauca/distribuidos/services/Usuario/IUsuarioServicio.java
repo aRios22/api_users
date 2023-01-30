@@ -10,6 +10,6 @@ public interface IUsuarioServicio {
     
     public ArrayList<Usuario> findAll();
     public UsuarioDTO save(UsuarioDTO Admin);
-    public Boolean validarCredenciales(CredencialesDTO credenciales);
+    public UsuarioDTO validarCredenciales(CredencialesDTO credenciales);
 
 }

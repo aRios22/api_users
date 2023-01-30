@@ -37,13 +37,13 @@ public class UsuarioRepository {
         return objUsuario;
     }
 
-    public Boolean validarCredenciales(String usuario, String clave){
+    public Usuario validarCredenciales(String usuario, String clave){
         for (Usuario user : this.listaUsuarios) {
             if(user.getLogin().compareTo(usuario) == 0 && user.getContraseña().compareTo(clave)==0){
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
 
     private void cargarUsuarios(){

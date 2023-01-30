@@ -38,13 +38,13 @@ public class AdministradorRepository {
         return objAdmin;
     }
 
-    public Boolean validarCredenciales(String usuario, String clave){
+    public Administrador validarCredenciales(String usuario, String clave){
         for (Administrador administrador : listaAdministradores) {
             if(administrador.getLogin().compareTo(usuario) == 0 && administrador.getContraseña().compareTo(clave)==0){
-                return true;
+                return administrador;
             }
         }
-        return false;
+        return null;
     }
 
     private void cargarAdmins(){

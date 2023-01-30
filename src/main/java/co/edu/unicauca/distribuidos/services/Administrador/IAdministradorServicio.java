@@ -9,6 +9,6 @@ public interface IAdministradorServicio {
 
     public ArrayList<Administrador> findAll();
     public AdministradorDTO save(AdministradorDTO Admin);
-    public Boolean validarCredenciales(CredencialesDTO credenciales);
+    public AdministradorDTO validarCredenciales(CredencialesDTO credenciales);
     
 }

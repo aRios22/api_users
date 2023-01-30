@@ -30,7 +30,7 @@ public class UsuarioDTO {
 
     @NotNull
     @Pattern (regexp = "^5.*$")
-    @Digits(integer = 10, fraction = 0)
+    @Size(min = 10, max = 10)
     private String telefono;
 
     @NotNull
